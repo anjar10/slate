@@ -1,11 +1,9 @@
 ---
-title: API Reference
+title: Flip API V1
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
+  - php
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -24,6 +22,10 @@ Welcome to the Kittn API! You can use our API to access Kittn API endpoints, whi
 We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+
+## General Response
+
+## Error Code
 
 # Authentication
 
@@ -65,9 +67,9 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# User
 
-## Get All Kittens
+## Get User Detail
 
 ```ruby
 require 'kittn'
@@ -98,22 +100,21 @@ let kittens = api.kittens.get();
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+    "id": 59,
+    "email": "ginanjar.ibnu@gmail.com",
+    "name": "Ginanjar Ibnu Solikhin",
+    "identity_number": "1234567890",
+    "identity_type": "ktp",
+    "birth_date": "2000-01-01",
+    "phone_number": "+6285729685018",
+    "address": "Jalan Amonia V No 2",
+    "city": 3405,
+    "tempat_lahir": 3492,
+    "identity_image": "59_eaa4eba9453d906d8f5ae1816ecaf2fc_1522653089.jpg",
+    "face_image": "59_725ba12bb7e49d650042fe46c2a5b5b5_1522653089.jpg",
+    "face_and_identity_image": "59_c23bca50e0fc1ea05a074928489dcdfb_1521443408.jpeg",
+}
 ```
 
 This endpoint retrieves all kittens.
@@ -133,107 +134,26 @@ available | true | If set to false, the result will include kittens that have al
 Remember — a happy kitten is an authenticated kitten!
 </aside>
 
-## Get a Specific Kitten
+## Update User
 
-```ruby
-require 'kittn'
+## Verify Identity
+## Verify Email
+## Verify Phone Number
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+# Transaction
+## Get All Tranasction
+## Create Transaction
+## Confirm Tranasction
+## Cancel Tranasction
+## Upload Receipt
+## Update Beneficiary Account
+## Get Transaction Detail
+## Inquiry Beneficiary Name
 
-```python
-import kittn
+# General
+## Get Bank Info
+## Is Maintenance
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+# Callback
+## Transaction
+## User
