@@ -38,7 +38,7 @@ curl --request GET \
 ```
 
 
-We are using **Bearer Authentication** by including `Authorization` and `api-key` header in each of your request. Value of the `Authorization header` is token provided by [login](#get-user-detail) or [signup](#get-user-detail) endpoint.
+We are using **Bearer Authentication** by including `Authorization` and `api-key` header in each of your request. Value of the `Authorization header` is token provided by [login](#login) or [signup](#sign-up) endpoint.
 
 ## General Response
 
