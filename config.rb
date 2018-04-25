@@ -1,6 +1,9 @@
 # Unique header generation
 require './lib/unique_head.rb'
 
+#BASE URL
+config[:base_url] = 'https://flip.id/external-api/v1'
+
 # Markdown
 set :markdown_engine, :redcarpet
 set :markdown,
