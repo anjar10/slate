@@ -1,12 +1,7 @@
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Flip API!
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
-## Brief Explanation
 ## Supported Banks
 
 Currently, we only support disbursement to these banks:
@@ -22,4 +17,57 @@ Bank Code | Bank Name
 `muamalat`|Muamalat
 
 ## Authentication
-## Error Code
+
+```php
+<?php 
+$api_key = 'aaasssdddfffggghhhiiijjj';
+$token = 'zzzxxxcccvvvbbbnnnmmmqqq';
+
+$curl = curl_init();
+curl_setopt($curl, CURLOPT_HTTPHEADER, [
+	"Authorization: Bearer $token",
+	"api-key: $api_key"
+	]);
+```
+
+
+```shell
+curl --request GET \
+  --header 'Authorization: Bearer zzzxxxcccvvvbbbnnnmmmqqq' \
+  --header 'api-key: zzzxxxcccvvvbbbnnnmmmqqq'
+```
+
+
+We are using **Bearer Authentication** by including `Authorization` and `api-key` header in each of your request. Value of the `Authorization header` is token provided by [login](#get-user-detail) or [signup](#get-user-detail) endpoint.
+
+## General Response
+
+### Unauthorized
+
+```json
+Status 401
+Content-Type: application/json
+
+{
+    "name": "Unauthorized",
+    "message": "You are requesting with an invalid credential.",
+    "status": 401,
+}
+```
+
+This response will be sent if the value of Authorization header or the api-key key is invalid.
+
+### Not Found
+
+```json
+Status 404
+Content-Type: application/json
+
+{
+    "name": "Not Found",
+    "message": "Page not found.",
+    "status": 404,
+}
+```
+
+You will get this response if the url you're trying to access is wrong, or if the resource you're trying to access is not exist.
