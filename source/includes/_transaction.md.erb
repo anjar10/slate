@@ -1,6 +1,9 @@
 # Transaction
 ## Create Transaction
 
+### Request
+`POST <%= config[:base_url] %>/transaction`
+
 ```http
 POST /transaction HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
@@ -8,12 +11,88 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
-### Request
-`POST <%= config[:base_url] %>/transaction`
+>Example Command:
+
+```php
+<?php
+    $ch = curl_init();
+    $api_key = '[API_KEY]';
+    $user_token = '[USER_TOKEN]';
+    $payloads = [
+        sender_bank => 'bni',
+        beneficiary_account => '3070030364',
+        beneficiary_name => 'Dummy Account',
+        beneficiary_bank => 'muamalat',
+        beneficiary_email => 'dummy@email.com',
+        amount => 999999,
+        remark => 'Dummy via Flip',
+        is_flip_plus => false,
+    ];
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'api-key: ' . $api_key,
+                           'Authorization: Bearer ' . $user_token));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/transaction" \
+  -X POST \
+  -H "api-key: [API_KEY]" \
+  -H "Authorization:  Bearer [USER_TOKEN]"
+  -d sender_bank='bni' \
+  -d beneficiary_account='3070030364' \
+  -d beneficiary_name='Dummy Account' \
+  -d beneficiary_bank='muamalat' \
+  -d beneficiary_email='dummy@email.com' \
+  -d amount='999999' \
+  -d remark='Dummy via Flip' \
+  -d is_flip_plus='false'
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`sender_bank` | *string* | **`required`**<br>The default sender bank in your account.
+`beneficiary_account` | *string* | **`required`**<br>The account number of the recipient.
+`beneficiary_name` | *string* | **`required`**<br>The name of the recipient account holder.
+`beneficiary_bank` | *string* | **`required`**<br>Bank code of the recipient bank.
+`beneficiary_email` | *string* | **`optional`**<br>The email of the recipient account holder.
+`beneficiary_city` | *int* | **`optional`**<br>City code of the recipient city.
+`amount` | *int* | **`required`**<br>The amount of money to be disbursed in IDR.
+`remark` | *string* | **`required`**<br>Remark to be included in the transfer made to the recipient.
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message" : "Transaction was created successfully"
+}
+```
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
 
 
-## Get All Tranasctions
+## Get All Transaction
 This end-point will provide all user's transaction that has been created
+
+### Request
+`GET <%= config[:base_url] %>/transaction`
 
 ```http
 GET /transaction HTTP/1.1
@@ -22,44 +101,39 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
-### Request
-`GET <%= config[:base_url] %>/user`
-
 ```php
 <?php
-ch = curl_init();
-$user_token = '[USER_TOKEN]';
-$api_key = '[API_KEY]';
+    ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
 
-curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction");
-curl_setopt($ch, CURLOPT_HTTPHEADER,
-                 array('Content-Type: application/x-www-form-urlencoded',
-                       'Authorization: Bearer ' . $user_token,
-                       'api-key:' . $api_key));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer ' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
-$response = curl_exec($ch);
-$response = json_decode($response, true);
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
 
-curl_close($ch);
-```
-```shell
-curl "<%= config[:base_url] %>/transaction" \
-  -H "Authorization: Bearer [USER_TOKEN]" \
-  -H "api-key: [API_KEY]"
+    curl_close($ch);
+    ```
+    ```shell
+    curl "<%= config[:base_url] %>/transaction" \
+      -H "Authorization: Bearer [USER_TOKEN]" \
+      -H "api-key: [API_KEY]"
 ```
 
 ### Response
-The above request returns JSON structured like this:
 
 ```json
-
 {
-    "total_data": 85,
+    "total_data": 25,
     "data_per_page": 20,
-    "total_page": 5,
+    "total_page": 2,
     "page": 1,
     "data": [
         {
@@ -67,20 +141,16 @@ The above request returns JSON structured like this:
             "user_id": 23,
             "amount": 10000,
             "status": "PENDING",
-            "timestamp": "2017-08-28 14:32:47",
-            "bank_code": "bni",
-            "account_number": "0437051936",
-            "recipient_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "sender_bank": "bni",
+            "beneficiary_account": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
             "sender_bank": "bri",
             "remark": "testing",
-            "receipt": "",
-            "time_served": "0000-00-00 00:00:00",
-            "bundle_id": 0,
-            "company_id": 7,
+            "debit_receipt": "",
+            "credit_receipt": "",
+            "created_at": "2017-08-28 14:32:47",
+            "completed_at": "0000-00-00 00:00:00",
             "recipient_city": 391,
-            "created_from": "API",
-            "direction": "DOMESTIC_TRANSFER",
-            "sender": null,
             "fee": 1500
         },
         {
@@ -88,37 +158,56 @@ The above request returns JSON structured like this:
             "user_id": 23,
             "amount": 10000,
             "status": "DONE",
-            "timestamp": "2017-08-24 21:21:23",
-            "bank_code": "bni",
-            "account_number": "0437051936",
-            "recipient_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "sender_bank": "bni",
+            "beneficiary_account": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
             "sender_bank": "bri",
             "remark": "test remark",
-            "receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
-            "time_served": "2017-08-25 09:11:35",
-            "bundle_id": 0,
-            "company_id": 7,
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "2017-08-25 09:11:35",
             "recipient_city": 391,
-            "created_from": "API",
-            "direction": "FOREIGN_INBOUND_SPECIAL_TRANSFER",
-            "sender": {
-                "sender_name": "John Doe",
-                "place_of_birth": 391,
-                "date_of_birth": "1992-01-01",
-                "address": "taman bakokekok di jalan bakokekok 15 no.2 - 230",
-                "sender_identity_type": "nat_id",
-                "sender_identity_number": "asdas213123",
-                "sender_country": 100252,
-                "job": "babu"
-            },
-            "fee": 1000
+            "fee": 0
         }
     ]
 }
 ```
 
+The above request returns JSON structured like this:
+
+Attribute | Description
+----------|-------------
+total_data | Total data returned in all page
+data_per_page | Total data returned in current page
+total_page | Total/max page available
+page | Current page
+data | Array of <b>transaction object</b>.
+
+#### Transaction Object
+Attribute | Description
+----------|-------------
+`id` | Flip’s transaction id.
+`user_id` | Your account user id in our system.
+`amount` | The amount of money to be disbursed in IDR.
+`status` | Transaction status. Possible values are:<br><ul><li></li><li></li></ul>
+`sender_bank` | The default sender bank in your account.
+`beneficiary_account` | The account number of the recipient.
+`beneficiary_name` | The name of the recipient account holder.
+`sender_bank` | The default sender bank in your account.
+`remark` | Remark to be included in the transfer made to the recipient.
+`debit_receipt` | Url of the debit transfer receipt from Flip.
+`credit_receipt` | Url of the credit transfer receipt from User.
+`created_at` | The time when the transaction is created.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`recipient_city` | City code of the recipient city
+`fee` | The fee of the transaction
+
 ## Get Transaction Detail
 This endpoint will provide information of single transaction based on transaction id
+
+### Request
+`GET <%= config[:base_url] %>/transaction/{TRANSACTION_ID}`
 
 ```http
 GET /transaction/{TRANSACTION_ID} HTTP/1.1
@@ -127,18 +216,39 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
-### Request
-`GET <%= config[:base_url] %>/transaction/{TRANSACTION_ID}`
-
 ```php
 <?php
+  ch = curl_init();
+  $user_token = '[USER_TOKEN]';
+  $api_key = '[API_KEY]';
+  $transaction_id = '999111';
+
+  curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id);
+  curl_setopt($ch, CURLOPT_HTTPHEADER,
+                   array('Content-Type: application/x-www-form-urlencoded',
+                         'Authorization: Bearer ' . $user_token,
+                         'api-key:' . $api_key));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+  $response = curl_exec($ch);
+  $response = json_decode($response, true);
+
+  curl_close($ch);
 ```
 
 ```shell
+curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 ## Confirm Transaction
 Use this endpoint to confirm transaction after user transferred the appropriate amount to Flip's bank account.
+
+### Request
+`POST <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/confirm`
 
 ```http
 POST /transaction/{TRANSACTION_ID}/confirm HTTP/1.1
@@ -147,37 +257,58 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
-### Request
-`GET <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/confirm`
-
 ```php
 <?php
-$ch = curl_init();
-$user_token = '[USER_TOKEN]';
-$api_key = '[API_KEY]';
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $transaction_id = '999111';
 
-curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/confirm);
-curl_setopt($ch, CURLOPT_HTTPHEADER,
-                 array('Content-Type: application/x-www-form-urlencoded',
-                       'Authorization: Bearer' . $user_token,
-                       'api-key:' . $api_key));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/confirm);
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
 
-$response = curl_exec($ch);
-$response = json_decode($response, true);
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
 
-curl_close($ch);
+    curl_close($ch);
 ```
+
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/confirm" \
   -X POST
 ```
 
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message" : "Transaction was confirmed successfully"
+}
+```
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
 ## Cancel Transaction
 Use this endpoint to cancel user transaction based on transaction id
+
+### Request
+`POST <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/cancel`
 
 ```http
 POST /transaction/{TRANSACTION_ID}/cancel HTTP/1.1
@@ -186,36 +317,132 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
-### Request
-`POST <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/cancel`
-
 ```php
 <?php
-$ch = curl_init();
-$user_token = '[USER_TOKEN]';
-$api_key = '[API_KEY]';
-$transaction_id = 1;
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $transaction_id = '999111';
 
-curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/cancel");
-curl_setopt($ch, CURLOPT_HTTPHEADER,
-                 array('Content-Type: application/x-www-form-urlencoded',
-                       'Authorization: Bearer' . $user_token,
-                       'api-key:' . $api_key));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-curl_setopt($ch, CURLOPT_HEADER, FALSE);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/cancel");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
 
-$response = curl_exec($ch);
-$response = json_decode($response, true);
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
 
-curl_close($ch);
+    curl_close($ch);
 ```
+
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/cancel" \
   -X POST
 ```
 
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message" : "Transaction was canceled successfully"
+}
+```
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
 ## Upload Receipt
 ## Update Beneficiary Account
 ## Inquiry Beneficiary Name
+Use this endpoint to confirm transaction after user transferred the appropriate amount to Flip's bank account.
+
+### Request
+`GET <%= config[:base_url] %>/transaction/beneficiary-account-inquiry?account_number={ACCOUNT_NUMBER}&bank_code={BANK_CODE}`
+
+```http
+GET /transaction/beneficiary-account-inquiry?account_number={ACCOUNT_NUMBER}&bank_code={BANK_CODE} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+```php
+<?php
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $query = [
+        'account_number' => '3070030364',
+        'bank_code' => 'muamalat'
+    ]
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry" . http_build_query($query));
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry?account_number={ACCOUNT_NUMBER}&bank_code={BANK_CODE}"
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
+
+### Response
+> Example of cached response
+
+```json
+{
+    "bank_code": "muamalat",
+    "account_number": "3070030364",
+    "account_holder": "FLIPTECH LENTERA INSPIRASI PERTIWI, PT",
+    "status": "SUCCESS"
+}
+```
+
+> Example of uncached response
+
+```json
+{
+    "bank_code": "muamalat",
+    "account_number": "3070030364",
+    "account_holder": "",
+    "status": "PENDING"
+}
+```
+
+Attribute | Description
+----------|-------------
+bank_code | Bank code of the account
+account_number | Account number of the bank account
+account_holder | Name of the bank account holder
+status | Possible values are <br> <ul><li>`PENDING`<br>Inquiry still in process</li><li>`SUCCESS`<br>Inquiry process is complete and bank account number is valid</li><li>`INVALID_ACCOUNT_NUMBER`<br>Inquiry process is complete but the account number is invalid or maybe a virtual account number</li><li>`SUSPECTED_ACCOUNT`<br>Bank account have been suspected on doing fraud. You still can do a disbursement to this account.</li><li>`BLACK_LISTED`<br>Bank account have been confirmed on doing a fraud and therefore is blacklisted. You can't do a disbursment to this account.</li></ul>
+
+<aside class="notice"><code class="prettyprint">SUSPECTED_ACCOUNT</code> and <code class="prettyprint">BLACK_LISTED</code> are based on Flip's user report.  This might be inacurrate, and we flag an exact string of the account number reported by our users. For example, <code class="prettyprint">350000069</code> will be different with <code class="prettyprint">00350000069</code> although it may be the same account. We are still working on a better way to handle this leading zeroes issue.</aside>
