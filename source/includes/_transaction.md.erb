@@ -19,14 +19,14 @@ api-key: [API_KEY]
     $api_key = '[API_KEY]';
     $user_token = '[USER_TOKEN]';
     $payloads = [
-        sender_bank => 'bni',
-        beneficiary_account => '3070030364',
-        beneficiary_name => 'Dummy Account',
-        beneficiary_bank => 'muamalat',
-        beneficiary_email => 'dummy@email.com',
-        amount => 999999,
-        remark => 'Dummy via Flip',
-        is_flip_plus => false,
+        'sender_bank' => 'bni',
+        'beneficiary_account' => '3070030364',
+        'beneficiary_name' => 'Dummy Account',
+        'beneficiary_bank' => 'muamalat',
+        'beneficiary_email' => 'dummy@email.com',
+        'amount' => 999999,
+        'remark' => 'Dummy via Flip',
+        'is_flip_plus' => false,
     ];
 
     curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction");
@@ -101,6 +101,8 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
+>Example Command:
+
 ```php
 <?php
     ch = curl_init();
@@ -120,11 +122,11 @@ api-key: [API_KEY]
     $response = json_decode($response, true);
 
     curl_close($ch);
-    ```
-    ```shell
-    curl "<%= config[:base_url] %>/transaction" \
-      -H "Authorization: Bearer [USER_TOKEN]" \
-      -H "api-key: [API_KEY]"
+```
+```shell
+curl "<%= config[:base_url] %>/transaction" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 ### Response
@@ -151,7 +153,7 @@ api-key: [API_KEY]
             "created_at": "2017-08-28 14:32:47",
             "completed_at": "0000-00-00 00:00:00",
             "recipient_city": 391,
-            "fee": 1500
+            "fee": 0
         },
         {
             "id": 789,
@@ -216,6 +218,8 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
+>Example Command:
+
 ```php
 <?php
   ch = curl_init();
@@ -256,6 +260,8 @@ Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
+
+>Example Command:
 
 ```php
 <?php
@@ -317,6 +323,8 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
+> Example Command
+
 ```php
 <?php
     $ch = curl_init();
@@ -365,7 +373,145 @@ Attribute | Description
 `message` | Successful message
 
 ## Upload Receipt
+
+### Request
+`POST <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/upload-credit-receipt`
+
+```http
+POST /transaction/{TRANSACTION_ID}/upload-credit-receipt HTTP/1.1
+Content-Type: application/form-data
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+> Example Command
+
+```php
+<?php
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $transaction_id = '999111';
+    $payloads = [
+        'credit_receipt_image' => '@/home/user1/Desktop/credit_receipt_image.jpg',
+    ];
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/upload-credit-receipt");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: multipart/form-data',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payloads);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/upload-credit-receipt" \  
+  -F credit_receipt_image='@/path/to/image'
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`credit_receipt_image` | *file* | **`required`**<br>The credit receipt from user.
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message" : "Transaction was canceled successfully"
+}
+```
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
 ## Update Beneficiary Account
+
+### Request
+`POST <%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-account`
+
+```http
+POST /transaction/{TRANSACTION_ID}/update-beneficiary-account HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+> Example Command
+
+```php
+<?php
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $transaction_id = '999111';
+    $payloads = [
+        'beneficiary_account' => '3070030364',
+        'beneficiary_name' => 'Dummy Account',
+        'beneficiary_bank' => 'bni',
+        'beneficiary_city' => 1324
+    ];
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/" . $transaction_id . "/update-beneficiary-account");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-account" \
+  -X POST \
+  -d beneficiary_account='3070030364' \
+  -d beneficiary_name='Dummy Account' \
+  -d beneficiary_bank='bni' \
+  -d beneficiary_city=1324
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`beneficiary_account` | *string* | **`required`**<br>The account number of the recipient.
+`beneficiary_name` | *string* | **`required`**<br>The name of the recipient account holder.
+`beneficiary_bank` | *string* | **`required`**<br>Bank code of the recipient bank.
+`beneficiary_city` | *int* | **`optional`**<br>City code of the recipient city.
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message" : "Transaction was canceled successfully"
+}
+```
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
 ## Inquiry Beneficiary Name
 Use this endpoint to confirm transaction after user transferred the appropriate amount to Flip's bank account.
 
@@ -397,7 +543,6 @@ api-key: [API_KEY]
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_HEADER, FALSE);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-    curl_setopt($ch, CURLOPT_POST, TRUE);
 
     $response = curl_exec($ch);
     $response = json_decode($response, true);
@@ -413,7 +558,8 @@ curl "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry?account_n
 
 Parameter | Type | Description
 --------- | ----------- | -----------
-`transaction_id` | *string* | **`required`**<br>The transaction id
+`account_number` | *string* | **`required`**<br>Account number of the bank account
+`bank_code` | *string | **`required`**<br>Bank code of the account
 
 ### Response
 > Example of cached response

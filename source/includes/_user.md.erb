@@ -19,8 +19,8 @@ api-key: [API_KEY]
   $ch = curl_init();
   $api_key = '[API_KEY]';
   $payloads = [
-    "token" => '[GENERATED_TOKEN_BY_CLIENT]',
-    "state" => '[STATE]'
+    'token' => '[GENERATED_TOKEN_BY_CLIENT]',
+    'state' => '[STATE]'
   ];
 
   curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user/login");
@@ -260,7 +260,7 @@ This end-point will insert/update user's attributes.
 
 ```http
 POST /user HTTP/1.1
-Content-Type: application/x-www-form-urlencoded
+Content-Type: multipart/form-data
 Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
@@ -282,18 +282,21 @@ api-key: [API_KEY]
       'phone_number' => '081318171612',
       'city' => '1039',
       'address' => 'Jln. Dummy'
+      'identity_image' => '@/home/user1/Desktop/identity_image.jpg',
+      'face_image' => '@/home/user1/Desktop/face_image.jpg',
+      'face_and_identity_image' => '@/home/user1/Desktop/face_and_identity_image.jpg',
   ];
 
   curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user");
   curl_setopt($ch, CURLOPT_HTTPHEADER,
-                   array('Content-Type: application/x-www-form-urlencoded',
+                   array('Content-Type: multipart/form-data',
                          'Authorization: Bearer' . $user_token,
                          'api-key:' . $api_key));
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($ch, CURLOPT_HEADER, FALSE);
   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
   curl_setopt($ch, CURLOPT_POST, TRUE);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($payloads));
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payloads);
 
   $response = curl_exec($ch);
   $response = json_decode($response, true);
@@ -303,18 +306,20 @@ api-key: [API_KEY]
 
 ```shell
 curl "<%= config[:base_url] %>/user" \
-  -X POST \
   -H "Authorization: Bearer [USER_TOKEN]" \
   -H "api-key: [API_KEY]" \
-  -d email="dummy@email.com" \
-  -d name="Im Dummy" \
-  -d identity_number="3175000100010001" \
-  -d identity_type="ktp" \
-  -d birth_date="1994-04-20" \
-  -d birth_place="1039" \
-  -d phone_number="081318171612" \
-  -d city="1039" \
-  -d address="Jln. Dummy"
+  -F "email"="dummy@email.com" \
+  -F "name"="Im Dummy" \
+  -F "identity_number"="3175000100010001" \
+  -F "identity_type"="ktp" \
+  -F "birth_date"="1994-04-20" \
+  -F "birth_place"="1039" \
+  -F "phone_number"="081318171612" \
+  -F "city"="1039" \
+  -F "address"="Jln. Dummy" \
+  -F "identity_image"="@/home/user1/Desktop/identity_image.jpg" \
+  -F "face_image"="@/home/user1/Desktop/face_image.jpg" \
+  -F "face_and_identity_image"="@/home/user1/Desktop/face_and_identity_image.jpg"
 ```
 
 **Parameters**
@@ -401,6 +406,63 @@ curl "<%= config[:base_url] %>/user/verify-phone-number" \
 Parameter | Type | Description
 --------- | ----------- | -----------
 `token` | *string* | **`required`**<br>Verification code that Flip sent to phone using SMS.
+
+### Response
+```json
+{
+  "message": "Your phone number has been verified sucessfully"
+}
+```
+
+The above request returns JSON structured like this:
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
+## Verify Idenity
+This end point will ask Flip to verify user's identity.
+
+### Request
+`POST <%= config[:base_url] %>/user/verify-identity`
+
+```http
+POST /user/verify-phone-number HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+>Example Command:
+
+```php
+<?php
+  $ch = curl_init();
+  $user_token = '[USER_TOKEN]';
+  $api_key = '[API_KEY]';
+
+  curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user/verify-identity");
+  curl_setopt($ch, CURLOPT_HTTPHEADER,
+                   array('Content-Type: application/x-www-form-urlencoded',
+                         'Authorization: Bearer' . $user_token,
+                         'api-key:' . $api_key));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+
+  $response = curl_exec($ch);
+  $response = json_decode($response, true);
+
+  curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/user/verify-identity" \
+  -X POST \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]" \
+```
 
 ### Response
 ```json
