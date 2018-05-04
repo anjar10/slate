@@ -248,6 +248,54 @@ curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}" \
   -H "api-key: [API_KEY]"
 ```
 
+Parameter | Type | Description
+--------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
+
+### Response
+
+```json
+{
+  {
+      "id": 790,
+      "user_id": 23,
+      "amount": 10000,
+      "status": "PENDING",
+      "sender_bank": "bni",
+      "beneficiary_account": "0437051936",
+      "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+      "sender_bank": "bri",
+      "remark": "testing",
+      "debit_receipt": "",
+      "credit_receipt": "",
+      "created_at": "2017-08-28 14:32:47",
+      "completed_at": "0000-00-00 00:00:00",
+      "recipient_city": 391,
+      "fee": 0
+  }
+}
+```
+
+The above request returns JSON structured like this:
+
+Attribute | Description
+----------|-------------
+`id` | Flip’s transaction id.
+`user_id` | Your account user id in our system.
+`amount` | The amount of money to be disbursed in IDR.
+`status` | Transaction status. Possible values are:<br><ul><li></li><li></li></ul>
+`sender_bank` | The default sender bank in your account.
+`beneficiary_account` | The account number of the recipient.
+`beneficiary_name` | The name of the recipient account holder.
+`sender_bank` | The default sender bank in your account.
+`remark` | Remark to be included in the transfer made to the recipient.
+`debit_receipt` | Url of the debit transfer receipt from Flip.
+`credit_receipt` | Url of the credit transfer receipt from User.
+`created_at` | The time when the transaction is created.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`recipient_city` | City code of the recipient city
+`fee` | The fee of the transaction
+
 ## Confirm Transaction
 Use this endpoint to confirm transaction after user transferred the appropriate amount to Flip's bank account.
 
@@ -289,6 +337,8 @@ api-key: [API_KEY]
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/confirm" \
   -X POST
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 **Parameters**
@@ -351,6 +401,8 @@ api-key: [API_KEY]
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/cancel" \
   -X POST
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 **Parameters**
@@ -416,12 +468,15 @@ api-key: [API_KEY]
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/upload-credit-receipt" \  
   -F credit_receipt_image='@/path/to/image'
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 **Parameters**
 
 Parameter | Type | Description
 --------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
 `credit_receipt_image` | *file* | **`required`**<br>The credit receipt from user.
 
 ### Response
@@ -484,6 +539,8 @@ api-key: [API_KEY]
 ```shell
 curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-account" \
   -X POST \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]" \
   -d beneficiary_account='3070030364' \
   -d beneficiary_name='Dummy Account' \
   -d beneficiary_bank='bni' \
@@ -494,6 +551,7 @@ curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-a
 
 Parameter | Type | Description
 --------- | ----------- | -----------
+`transaction_id` | *string* | **`required`**<br>The transaction id
 `beneficiary_account` | *string* | **`required`**<br>The account number of the recipient.
 `beneficiary_name` | *string* | **`required`**<br>The name of the recipient account holder.
 `beneficiary_bank` | *string* | **`required`**<br>Bank code of the recipient bank.
@@ -525,6 +583,8 @@ Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
 ```
 
+> Example Command
+
 ```php
 <?php
     $ch = curl_init();
@@ -533,7 +593,7 @@ api-key: [API_KEY]
     $query = [
         'account_number' => '3070030364',
         'bank_code' => 'muamalat'
-    ]
+    ];
 
     curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry" . http_build_query($query));
     curl_setopt($ch, CURLOPT_HTTPHEADER,
@@ -551,7 +611,9 @@ api-key: [API_KEY]
 ```
 
 ```shell
-curl "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry?account_number={ACCOUNT_NUMBER}&bank_code={BANK_CODE}"
+curl "<%= config[:base_url] %>/transaction/beneficiary-account-inquiry?account_number={ACCOUNT_NUMBER}&bank_code={BANK_CODE}" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
 ```
 
 **Parameters**
@@ -592,3 +654,81 @@ account_holder | Name of the bank account holder
 status | Possible values are <br> <ul><li>`PENDING`<br>Inquiry still in process</li><li>`SUCCESS`<br>Inquiry process is complete and bank account number is valid</li><li>`INVALID_ACCOUNT_NUMBER`<br>Inquiry process is complete but the account number is invalid or maybe a virtual account number</li><li>`SUSPECTED_ACCOUNT`<br>Bank account have been suspected on doing fraud. You still can do a disbursement to this account.</li><li>`BLACK_LISTED`<br>Bank account have been confirmed on doing a fraud and therefore is blacklisted. You can't do a disbursment to this account.</li></ul>
 
 <aside class="notice"><code class="prettyprint">SUSPECTED_ACCOUNT</code> and <code class="prettyprint">BLACK_LISTED</code> are based on Flip's user report.  This might be inacurrate, and we flag an exact string of the account number reported by our users. For example, <code class="prettyprint">350000069</code> will be different with <code class="prettyprint">00350000069</code> although it may be the same account. We are still working on a better way to handle this leading zeroes issue.</aside>
+
+## Get Transaction Queue
+Each transaction will queued to be sent to the recipient. You can view the queue number for each transanction in this endpoint.
+
+### Request
+`GET <%= config[:base_url] %>/transaction/queue?transaction_id={TRANSACTION_ID}`
+
+<aside class="notice">You can also provide a transaction id to filter the result to a specific transaction only</aside>
+
+```http
+GET /transaction/queue?transaction+id={TRANSACTION_ID} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+> Example Command
+
+```php
+<?php
+    $ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $query = [
+        'transaction_id' => '999111',
+    ];
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/queue" . http_build_query($query));
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/transaction/queue?transaction_id={TRANSACTION_ID}" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`transaction_id` | *string* | **`optional`**<br>The transaction id
+
+### Response
+
+The above request returns JSON structured like this:
+
+`transaction_id` as a key and `number_queue` as a value.
+
+> All transaction's queues
+
+```json
+{
+  "999111":15,
+  "999112":16,
+  "999113":17,
+  "999114":18
+}
+```
+
+> Transaction queue filtered by transaction id
+
+```json
+{
+    "999111":15
+}
+```

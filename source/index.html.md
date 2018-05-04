@@ -11,9 +11,9 @@ toc_footers:
 
 includes:
   - introduction
+  - general
   - user
   - transaction
-  - general
   - callback
   - errors
   - changelog
