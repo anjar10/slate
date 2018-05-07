@@ -212,8 +212,7 @@ curl "<%= config[:base_url] %>/user" \
 {
     "id": 999,
     "email": "dummy_person@gmail.com",
-    "email_verified": 1,
-    "status": 10,
+    "email_verified": true,
     "name": "Im Dummy Person",
     "identity_number": "317500010001",
     "identity_type": "ktp",
@@ -222,7 +221,7 @@ curl "<%= config[:base_url] %>/user" \
     "address": "Jln. Dummy Place",
     "city": 3405,
     "phone_number": "+6285729685018",
-    "phone_number_verified": 1,
+    "phone_number_verified": true,
     "identity_image": "59_eaa4eba9453d906d8f5ae1816ecaf2fc_1522653089.jpg",
     "face_image": "59_725ba12bb7e49d650042fe46c2a5b5b5_1522653089.jpg",
     "face_and_identity_image": "59_c23bca50e0fc1ea05a074928489dcdfb_1521443408.jpeg",
@@ -238,7 +237,6 @@ Attribute | Description
 `id` | User's id
 `email` | User's email
 `email_verified` | Email verification status. Possible values are:<br><ul><li>`true`<br>User has done email verification</li><li>`false`<br>User hasn't done email verification. User should click confirmation link sent to email</li></ul>
-`status` | User's status. Possible values are:<br><ul><li>`0`<br>User account hasn't active</li><li>`1`<br>User account has active</li><li>`2`<br>User account has been banned.</li></ul>
 `name` | User's full name
 `identity_type` | User's identity type. Pick one from the option. Options:<ul><li>`ktp`<br>Identity card (acronym of Kartu Tanda Penduduk)</li><li>`sim`<br>Driving license (acronym of Surat Izin Mengemudi)</li><li>`paspor`<br>Passport</li></ul>
 `identity_number` | User's identity number depends on `identity_type`
@@ -248,7 +246,7 @@ Attribute | Description
 `city` | Current user's city of residence<br>Base on city code list
 `phone_number` | User's phone number. Start with country code.
 `phone_number_verified` | Phone number verification status. Possible values are:<br><ul><li>`true`<br>User has done phone number verification</li><li>`false`<br>User hasn't done phone number verification</li></ul>
-`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and has been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip</li></ul>
+`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and has been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
 `identity_image` | Url of the identity card image
 `face_image` | Url of the close up face image
 `face_and_identity_image` | Url of the combination image. Contain user's face hold identity card.
@@ -424,7 +422,7 @@ Attribute | Description
 ----------|-------------
 `message` | Successful message
 
-## Verify Idenity
+## Verify Identity
 This end point will ask Flip to verify user's identity.
 
 ### Request

@@ -283,7 +283,7 @@ Attribute | Description
 `id` | Flip’s transaction id.
 `user_id` | Your account user id in our system.
 `amount` | The amount of money to be disbursed in IDR.
-`status` | Transaction status. Possible values are:<br><ul><li></li><li></li></ul>
+`status` | Transaction status. Possible values are:<br><ul><li>`NOT_CONFIRMED`<br>Thr transaction was not confirmed yet</li><li>`PENDING`<br>The transaction is still in process</li><li>`REJECTED`<br>Transaction was rejected because the fund have not received by Flip account</li><li>`CANCELED`<br>The transaction was canceled by user</li><li>`DONE`<br>The transaction is finished and the money have been sent to the recipent</li></ul>
 `sender_bank` | The default sender bank in your account.
 `beneficiary_account` | The account number of the recipient.
 `beneficiary_name` | The name of the recipient account holder.

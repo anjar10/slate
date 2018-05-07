@@ -91,6 +91,6 @@ We will hit your URL using POST request with content type `application/x-www-for
 Attribute | Description
 ----------|-------------
 data | `string`<br>JSON array string with content exactly the same as the response of disbursement or bank account inquiry (see example on the right side)
-token | `string`<br>Validation token to ensure that the callback is coming from our server. You can get your token in your Big Flip dashboard.
+token | `string`<br>Validation token to ensure that the callback is coming from our server. You can get your token in your Flip for Developer dashboard.
 
 Example code of how to receive the callback are shown on the right side.
