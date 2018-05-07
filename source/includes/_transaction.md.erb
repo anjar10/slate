@@ -184,7 +184,7 @@ total_data | Total data returned in all page
 data_per_page | Total data returned in current page
 total_page | Total/max page available
 page | Current page
-data | Array of <b>transaction object</b>.
+data | Array of ***transaction object***.
 
 #### Transaction Object
 Attribute | Description
@@ -192,7 +192,7 @@ Attribute | Description
 `id` | Flip’s transaction id.
 `user_id` | Your account user id in our system.
 `amount` | The amount of money to be disbursed in IDR.
-`status` | Transaction status. Possible values are:<br><ul><li></li><li></li></ul>
+`status` | Transaction status. Possible values are:<br><ul><li>`NOT_CONFIRMED`<br>Thr transaction was not confirmed yet</li><li>`PENDING`<br>The transaction is still in process</li><li>`REJECTED`<br>Transaction was rejected because the fund have not received by Flip account</li><li>`CANCELED`<br>The transaction was canceled by user</li><li>`DONE`<br>The transaction is finished and the money have been sent to the recipent</li></ul>
 `sender_bank` | The default sender bank in your account.
 `beneficiary_account` | The account number of the recipient.
 `beneficiary_name` | The name of the recipient account holder.
@@ -276,25 +276,7 @@ Parameter | Type | Description
 }
 ```
 
-The above request returns JSON structured like this:
-
-Attribute | Description
-----------|-------------
-`id` | Flip’s transaction id.
-`user_id` | Your account user id in our system.
-`amount` | The amount of money to be disbursed in IDR.
-`status` | Transaction status. Possible values are:<br><ul><li>`NOT_CONFIRMED`<br>Thr transaction was not confirmed yet</li><li>`PENDING`<br>The transaction is still in process</li><li>`REJECTED`<br>Transaction was rejected because the fund have not received by Flip account</li><li>`CANCELED`<br>The transaction was canceled by user</li><li>`DONE`<br>The transaction is finished and the money have been sent to the recipent</li></ul>
-`sender_bank` | The default sender bank in your account.
-`beneficiary_account` | The account number of the recipient.
-`beneficiary_name` | The name of the recipient account holder.
-`sender_bank` | The default sender bank in your account.
-`remark` | Remark to be included in the transfer made to the recipient.
-`debit_receipt` | Url of the debit transfer receipt from Flip.
-`credit_receipt` | Url of the credit transfer receipt from User.
-`created_at` | The time when the transaction is created.<br>Format: `YYYY-MM-DD HH:mm:ss`
-`completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
-`recipient_city` | City code of the recipient city
-`fee` | The fee of the transaction
+The above request returns JSON [transaction object] (#transaction-object)
 
 ## Confirm Transaction
 Use this endpoint to confirm transaction after user transferred the appropriate amount to Flip's bank account.
