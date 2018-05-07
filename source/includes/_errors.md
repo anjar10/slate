@@ -45,4 +45,6 @@ Any error related with transaction will have error codes ranging from 2000 to 29
 
 Error Code | Meaning
 -----------|--------
+2000 | The related attribute should not be empty.
+2001 | Action can't be done. See the message.
 2999 | Undefined error. Please contact us if this happen;
