@@ -71,3 +71,20 @@ Content-Type: application/json
 ```
 
 You will get this response if the url you're trying to access is wrong, or if the resource you're trying to access is not exist.
+
+### Client's Mistake
+```json
+Status 422
+Content-Type: application/json
+
+{
+    "errors": [
+        {
+            "code": [error_code],
+            "message": "[message]"
+        }
+    ]
+}
+```
+
+Possible value for `error_code` is all the code listed in the [Error Code section](#errors).
