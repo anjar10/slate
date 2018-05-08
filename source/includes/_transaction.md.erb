@@ -92,10 +92,10 @@ Attribute | Description
 This end-point will provide all user's transaction that has been created
 
 ### Request
-`GET <%= config[:base_url] %>/transaction`
+`GET <%= config[:base_url] %>/transaction?pagination={PAGINATION}&page={PAGE}`
 
 ```http
-GET /transaction HTTP/1.1
+GET /transaction?pagination={PAGINATION}&page={PAGE} HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
@@ -108,8 +108,10 @@ api-key: [API_KEY]
     ch = curl_init();
     $user_token = '[USER_TOKEN]';
     $api_key = '[API_KEY]';
+    $pagination = 20;
+    $page = 1;
 
-    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction");
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction?pagination=" . $pagination . "&page=" . $page");
     curl_setopt($ch, CURLOPT_HTTPHEADER,
                      array('Content-Type: application/x-www-form-urlencoded',
                            'Authorization: Bearer ' . $user_token,
@@ -124,10 +126,17 @@ api-key: [API_KEY]
     curl_close($ch);
 ```
 ```shell
-curl "<%= config[:base_url] %>/transaction" \
+curl "<%= config[:base_url] %>/transaction?pagination={PAGINATION}&page={PAGE}" \
   -H "Authorization: Bearer [USER_TOKEN]" \
   -H "api-key: [API_KEY]"
 ```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`pagination` | *integer* | **`optional`**<br>The pagination of the result. Default value is `20`
+`page` | *integer* | **`optional`**<br>The page number of the result to be viewed. Default value is `1`
 
 ### Response
 
@@ -247,6 +256,8 @@ curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}" \
   -H "Authorization: Bearer [USER_TOKEN]" \
   -H "api-key: [API_KEY]"
 ```
+
+**Parameters**
 
 Parameter | Type | Description
 --------- | ----------- | -----------
