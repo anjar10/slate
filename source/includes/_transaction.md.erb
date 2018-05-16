@@ -20,7 +20,7 @@ api-key: [API_KEY]
     $user_token = '[USER_TOKEN]';
     $payloads = [
         'sender_bank' => 'bni',
-        'beneficiary_account' => '3070030364',
+        'account_number' => '3070030364',
         'beneficiary_name' => 'Dummy Account',
         'beneficiary_bank' => 'muamalat',
         'beneficiary_email' => 'dummy@email.com',
@@ -52,7 +52,7 @@ curl "<%= config[:base_url] %>/transaction" \
   -H "api-key: [API_KEY]" \
   -H "Authorization:  Bearer [USER_TOKEN]"
   -d sender_bank='bni' \
-  -d beneficiary_account='3070030364' \
+  -d account_number='3070030364' \
   -d beneficiary_name='Dummy Account' \
   -d beneficiary_bank='muamalat' \
   -d beneficiary_email='dummy@email.com' \
@@ -66,7 +66,7 @@ curl "<%= config[:base_url] %>/transaction" \
 Parameter | Type | Description
 --------- | ----------- | -----------
 `sender_bank` | *string* | **`required`**<br>The default sender bank in your account.
-`beneficiary_account` | *string* | **`required`**<br>The account number of the recipient.
+`account_number` | *string* | **`required`**<br>The account number of the recipient.
 `beneficiary_name` | *string* | **`required`**<br>The name of the recipient account holder.
 `beneficiary_bank` | *string* | **`required`**<br>Bank code of the recipient bank.
 `beneficiary_email` | *string* | **`optional`**<br>The email of the recipient account holder.
@@ -153,7 +153,7 @@ Parameter | Type | Description
             "amount": 10000,
             "status": "PENDING",
             "sender_bank": "bni",
-            "beneficiary_account": "0437051936",
+            "account_number": "0437051936",
             "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
             "sender_bank": "bri",
             "remark": "testing",
@@ -170,7 +170,7 @@ Parameter | Type | Description
             "amount": 10000,
             "status": "DONE",
             "sender_bank": "bni",
-            "beneficiary_account": "0437051936",
+            "account_number": "0437051936",
             "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
             "sender_bank": "bri",
             "remark": "test remark",
@@ -203,7 +203,7 @@ Attribute | Description
 `amount` | The amount of money to be disbursed in IDR.
 `status` | Transaction status. Possible values are:<br><ul><li>`NOT_CONFIRMED`<br>Thr transaction was not confirmed yet</li><li>`PENDING`<br>The transaction is still in process</li><li>`REJECTED`<br>Transaction was rejected because the fund have not received by Flip account</li><li>`CANCELED`<br>The transaction was canceled by user</li><li>`DONE`<br>The transaction is finished and the money have been sent to the recipent</li></ul>
 `sender_bank` | The default sender bank in your account.
-`beneficiary_account` | The account number of the recipient.
+`account_number` | The account number of the recipient.
 `beneficiary_name` | The name of the recipient account holder.
 `sender_bank` | The default sender bank in your account.
 `remark` | Remark to be included in the transfer made to the recipient.
@@ -273,7 +273,7 @@ Parameter | Type | Description
       "amount": 10000,
       "status": "PENDING",
       "sender_bank": "bni",
-      "beneficiary_account": "0437051936",
+      "account_number": "0437051936",
       "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
       "sender_bank": "bri",
       "remark": "testing",
@@ -506,7 +506,7 @@ api-key: [API_KEY]
     $api_key = '[API_KEY]';
     $transaction_id = '999111';
     $payloads = [
-        'beneficiary_account' => '3070030364',
+        'account_number' => '3070030364',
         'beneficiary_name' => 'Dummy Account',
         'beneficiary_bank' => 'bni',
         'beneficiary_city' => 1324
@@ -534,7 +534,7 @@ curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-a
   -X POST \
   -H "Authorization: Bearer [USER_TOKEN]" \
   -H "api-key: [API_KEY]" \
-  -d beneficiary_account='3070030364' \
+  -d account_number='3070030364' \
   -d beneficiary_name='Dummy Account' \
   -d beneficiary_bank='bni' \
   -d beneficiary_city=1324
@@ -545,7 +545,7 @@ curl "<%= config[:base_url] %>/transaction/{TRANSACTION_ID}/update-beneficiary-a
 Parameter | Type | Description
 --------- | ----------- | -----------
 `transaction_id` | *string* | **`required`**<br>The transaction id
-`beneficiary_account` | *string* | **`required`**<br>The account number of the recipient.
+`account_number` | *string* | **`required`**<br>The account number of the recipient.
 `beneficiary_name` | *string* | **`required`**<br>The name of the recipient account holder.
 `beneficiary_bank` | *string* | **`required`**<br>Bank code of the recipient bank.
 `beneficiary_city` | *int* | **`optional`**<br>City code of the recipient city.

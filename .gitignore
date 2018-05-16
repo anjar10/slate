@@ -1,5 +1,7 @@
 *.gem
 *.rbc
+Gemfile
+Gemfile.lock
 .bundle
 .config
 coverage
