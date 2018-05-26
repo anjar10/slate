@@ -246,7 +246,7 @@ Attribute | Description
 `city` | Current user's city of residence<br>Base on city code list
 `phone_number` | User's phone number. Start with country code.
 `phone_number_verified` | Phone number verification status. Possible values are:<br><ul><li>`true`<br>User has done phone number verification</li><li>`false`<br>User hasn't done phone number verification</li></ul>
-`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and has been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
+`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and hasn't been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
 `identity_image` | Url of the identity card image
 `face_image` | Url of the close up face image
 `face_and_identity_image` | Url of the combination image. Contain user's face hold identity card.
@@ -284,9 +284,6 @@ api-key: [API_KEY]
       'phone_number' => '081318171612',
       'city' => '1039',
       'address' => 'Jln. Dummy'
-      'identity_image' => '@/home/user1/Desktop/identity_image.jpg',
-      'face_image' => '@/home/user1/Desktop/face_image.jpg',
-      'face_and_identity_image' => '@/home/user1/Desktop/face_and_identity_image.jpg',
   ];
 
   curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user");
@@ -319,9 +316,6 @@ curl "<%= config[:base_url] %>/user" \
   -F "phone_number"="081318171612" \
   -F "city"="1039" \
   -F "address"="Jln. Dummy" \
-  -F "identity_image"="@/home/user1/Desktop/identity_image.jpg" \
-  -F "face_image"="@/home/user1/Desktop/face_image.jpg" \
-  -F "face_and_identity_image"="@/home/user1/Desktop/face_and_identity_image.jpg"
 ```
 
 **Parameters**
@@ -337,6 +331,76 @@ Parameter | Type | Description
 `address` | *string* | **`optional`**<br>Current user's address.
 `city` | *string* | **`optional`**<br>Current user's city of residence<br>Base on city code list
 `phone_number` | *string* | **`optional`**<br>User's phone number. Start with country code.
+
+### Response
+```json
+{
+  "message": "Your account has been updated sucessfully"
+}
+```
+
+The above request returns JSON structured like this:
+
+Attribute | Description
+----------|-------------
+`message` | Successful message
+
+## Upload User Identity Image
+This end-point will update user identity images.
+
+### Request
+`POST <%= config[:base_url] %>/user/upload-identity-image`
+
+```http
+POST /user HTTP/1.1
+Content-Type: multipart/form-data
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+>Example Command:
+
+```php
+<?php
+  $ch = curl_init();
+  $user_token = '[USER_TOKEN]';
+  $api_key = '[API_KEY]';
+  $payloads = [
+      'identity_image' => '@/home/user1/Desktop/identity_image.jpg',
+      'face_image' => '@/home/user1/Desktop/face_image.jpg',
+      'face_and_identity_image' => '@/home/user1/Desktop/face_and_identity_image.jpg',
+  ];
+
+  curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user/upload-identity-image");
+  curl_setopt($ch, CURLOPT_HTTPHEADER,
+                   array('Content-Type: multipart/form-data',
+                         'Authorization: Bearer' . $user_token,
+                         'api-key:' . $api_key));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, $payloads);
+
+  $response = curl_exec($ch);
+  $response = json_decode($response, true);
+
+  curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/user/upload-identity-image" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]" \
+  -F "identity_image"="@/home/user1/Desktop/identity_image.jpg" \
+  -F "face_image"="@/home/user1/Desktop/face_image.jpg" \
+  -F "face_and_identity_image"="@/home/user1/Desktop/face_and_identity_image.jpg"
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
 `identity_image` | *file* | **`optional`**<br>User's identity card image depends on `identity_type`
 `face_image` | *file* | **`optional`**<br>User's face image (close up)
 `face_and_identity_image` | *file* | **`optional`**<br>Combination image. Contain user's face hold identity card.
@@ -344,7 +408,7 @@ Parameter | Type | Description
 ### Response
 ```json
 {
-  "message": "Your account has been updated sucessfully"
+  "message": "Identity images has been updated sucessfully"
 }
 ```
 
