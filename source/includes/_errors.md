@@ -37,6 +37,7 @@ Error Code | Meaning
 1000 | The related attribute should not be empty.
 1001 | Value for the related attribute is considered not clean. Things that considered as not clean are html tag and `?`, `#`, `$`, `'` (single quote), `"` (double quote), and `;` character
 1500 | User was not verified succesfully yet, hence cannot create a transaction
+1600 | Action can't be executed. See the message.
 1999 | Undefined error. Please contact us if this happen.
 
 
@@ -46,5 +47,5 @@ Any error related with transaction will have error codes ranging from 2000 to 29
 Error Code | Meaning
 -----------|--------
 2000 | The related attribute should not be empty.
-2001 | Action can't be done. See the message.
+2001 | Action can't be executed. See the message.
 2999 | Undefined error. Please contact us if this happen;

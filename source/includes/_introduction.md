@@ -15,6 +15,7 @@ Bank Code | Bank Name
 `bsm`|Bank Syariah Mandiri
 `cimb`|CIMB Niaga & CIMB Niaga Syariah
 `muamalat`|Muamalat
+`tabungan_pensiunan_nasional`|BTPN & BTPN Wow & Jenius
 
 ## Authentication
 
