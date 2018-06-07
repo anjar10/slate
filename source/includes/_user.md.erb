@@ -67,6 +67,56 @@ Attribute | Description
 ----------|-------------
 `token` | Unique user token
 
+## Logout
+
+### Request
+`POST <%= config[:base_url] %>/user/logout`
+
+```http
+POST /user/logout HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+api-key: [API_KEY]
+```
+
+>Example Command:
+
+```php
+<?php
+  $ch = curl_init();
+  $api_key = '[API_KEY]';
+
+  curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/user/logout");
+  curl_setopt($ch, CURLOPT_HTTPHEADER,
+                   array('Content-Type: application/x-www-form-urlencoded',
+                         'api-key:' . $api_key));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, FALSE);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+  curl_setopt($ch, CURLOPT_POST, TRUE);
+
+  $response = curl_exec($ch);
+  $response = json_decode($response, true);
+
+  curl_close($ch);
+```
+
+```shell
+curl "<%= config[:base_url] %>/user/logout" \
+  -X POST \
+  -H "api-key: [API_KEY]" \
+  -d token="[GENERATED_TOKEN_BY_CLIENT]" \
+  -d state="[STATE]"
+```
+
+### Response
+> The above request returns JSON structured like this:
+
+```json
+{
+  "message": "User was logged out succesfully"
+}
+```
+
 ## Sign Up
 
 ### Request
