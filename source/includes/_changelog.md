@@ -2,7 +2,7 @@
 
 **Thursday, June 07 2018**
 
-* Create [Get All Users Registered](#get-all-user-registered) and [Get All Transactions Created](#get-all-transaction-created) endpoint.
+* Create [Get All Registered Users](#get-all-registered-user) and [Get All Created Transactions](#get-all-created-transaction) endpoints.
 * Update [Error Codes](#error-codes).
 
 **Thursday, May 31 2018**
