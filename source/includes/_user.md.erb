@@ -352,7 +352,7 @@ This end-point will update user identity images.
 `POST <%= config[:base_url] %>/user/upload-identity-image`
 
 ```http
-POST /user HTTP/1.1
+POST /user/upload-identity-image HTTP/1.1
 Content-Type: multipart/form-data
 Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
@@ -493,7 +493,7 @@ This end point will ask Flip to verify user's identity.
 `POST <%= config[:base_url] %>/user/verify-identity`
 
 ```http
-POST /user/verify-phone-number HTTP/1.1
+POST /user/verify-identity HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 Authorization: Bearer [USER_TOKEN]
 api-key: [API_KEY]
@@ -544,7 +544,10 @@ Attribute | Description
 `message` | Successful message
 
 ## Get All User Registered
-This end-point will provide all user registered with your `app id`. User with admin role only that allowed use this end-point.
+This end-point will provide all user registered with your `app id`. 
+<aside class="notice">
+User with admin role only that allowed use this end-point.
+</aside>
 
 ### Request
 `GET <%= config[:base_url] %>/user/list-all-user?pagination={PAGINATION}&page={PAGE}`

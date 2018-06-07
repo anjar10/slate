@@ -2,7 +2,7 @@
 require './lib/unique_head.rb'
 
 #BASE URL
-config[:base_url] = 'https://flip.id/external-api/v1'
+config[:base_url] = 'https://flip.id/api/external'
 
 # Markdown
 set :markdown_engine, :redcarpet

@@ -727,7 +727,10 @@ The above request returns JSON structured like this:
 ```
 
 ## Get All Transaction Created
-This end-point will provide all transaction created from your platform. User with admin role only that allowed use this end-point.
+This end-point will provide all transaction created from your platform.
+<aside class="notice">
+User with admin role only that allowed use this end-point.
+</aside>
 
 ### Request
 `GET <%= config[:base_url] %>/transaction/list-all-transaction?pagination={PAGINATION}&page={PAGE}`
