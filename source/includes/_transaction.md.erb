@@ -193,7 +193,7 @@ total_data | Total data returned in all page
 data_per_page | Total data returned in current page
 total_page | Total/max page available
 page | Current page
-data | Array of ***transaction object***.
+data | Array of ***transaction object***
 
 #### Transaction Object
 Attribute | Description
@@ -725,3 +725,129 @@ The above request returns JSON structured like this:
     "999111":15
 }
 ```
+
+## Get All Transaction Created
+This end-point will provide all transaction created from your platform. User with admin role only that allowed use this end-point.
+
+### Request
+`GET <%= config[:base_url] %>/transaction/list-all-transaction?pagination={PAGINATION}&page={PAGE}`
+
+```http
+GET /transaction/list-all-transaction?pagination={PAGINATION}&page={PAGE} HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer [USER_TOKEN]
+api-key: [API_KEY]
+```
+
+>Example Command:
+
+```php
+<?php
+    ch = curl_init();
+    $user_token = '[USER_TOKEN]';
+    $api_key = '[API_KEY]';
+    $pagination = 20;
+    $page = 1;
+
+    curl_setopt($ch, CURLOPT_URL, "<%= config[:base_url] %>/transaction/list-all-transaction?pagination=" . $pagination . "&page=" . $page");
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                     array('Content-Type: application/x-www-form-urlencoded',
+                           'Authorization: Bearer ' . $user_token,
+                           'api-key:' . $api_key));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_HEADER, FALSE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+    $response = curl_exec($ch);
+    $response = json_decode($response, true);
+
+    curl_close($ch);
+```
+```shell
+curl "<%= config[:base_url] %>/transaction/list-all-transaction?pagination={PAGINATION}&page={PAGE}" \
+  -H "Authorization: Bearer [USER_TOKEN]" \
+  -H "api-key: [API_KEY]"
+```
+
+**Parameters**
+
+Parameter | Type | Description
+--------- | ----------- | -----------
+`pagination` | *integer* | **`optional`**<br>The pagination of the result. Default value is `20`
+`page` | *integer* | **`optional`**<br>The page number of the result to be viewed. Default value is `1`
+
+### Response
+
+```json
+{
+    "total_data": 25,
+    "data_per_page": 20,
+    "total_page": 2,
+    "page": 1,
+    "data": [
+        {
+            "id": 790,
+            "user_id": 23,
+            "amount": 10000,
+            "status": "PENDING",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "testing",
+            "debit_receipt": "",
+            "credit_receipt": "",
+            "created_at": "2017-08-28 14:32:47",
+            "completed_at": "0000-00-00 00:00:00",
+            "recipient_city": 391,
+            "fee": 0
+        },
+        {
+            "id": 789,
+            "user_id": 23,
+            "amount": 10000,
+            "status": "DONE",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "test remark",
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "2017-08-25 09:11:35",
+            "recipient_city": 391,
+            "fee": 0
+        }
+    ]
+}
+```
+
+The above request returns JSON structured like this:
+
+Attribute | Description
+----------|-------------
+total_data | Total data returned in all page
+data_per_page | Total data returned in current page
+total_page | Total/max page available
+page | Current page
+data | Array of ***transaction object***
+
+#### Transaction Object
+Attribute | Description
+----------|-------------
+`id` | Flip’s transaction id.
+`user_id` | Your account user id in our system.
+`amount` | The amount of money to be disbursed in IDR.
+`status` | Transaction status. Possible values are:<br><ul><li>`NOT_CONFIRMED`<br>Thr transaction was not confirmed yet</li><li>`PENDING`<br>The transaction is still in process</li><li>`REJECTED`<br>Transaction was rejected because the fund have not received by Flip account</li><li>`CANCELED`<br>The transaction was canceled by user</li><li>`DONE`<br>The transaction is finished and the money have been sent to the recipent</li></ul>
+`sender_bank` | The default sender bank code in your account.
+`account_number` | The account number of the recipient.
+`beneficiary_name` | The name of the recipient account holder.
+`beneficiary_bank` | Bank code of the recipient bank
+`remark` | Remark to be included in the transfer made to the recipient.
+`debit_receipt` | Url of the debit transfer receipt from Flip.
+`credit_receipt` | Url of the credit transfer receipt from User.
+`created_at` | The time when the transaction is created.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
+`recipient_city` | City code of the recipient city
+`fee` | The fee of the transaction
