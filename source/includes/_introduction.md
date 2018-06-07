@@ -58,6 +58,20 @@ Content-Type: application/json
 
 This response will be sent if the value of Authorization header or the api-key key is invalid.
 
+### Forbidden Action
+```json
+Status 403
+Content-Type: application/json
+
+{
+    "name": "Forbidden",
+    "message": "You are not allowed to perform this action.",
+    "code": 0,
+    "status": 403,
+}
+```
+You will get this response if your account role not eligible to access the end-point.
+
 ### Not Found
 
 ```json
