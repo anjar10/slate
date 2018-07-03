@@ -16,8 +16,8 @@ If error occured, it will return an error with structure as shown in the right p
 {
 	"errors" : [
 		{
-			"code" : 1000,
-			"message" : "Name should not be empty"
+			"code" : 1011,
+			"message" : "User not found"
 		},
 		...
 	]
@@ -34,23 +34,22 @@ Any error related with user will have error codes ranging from 1000 to 1999 with
 
 Error Code | Meaning
 -----------|--------
-1000 | The related attribute should not be empty.
 1001 | Value for the related attribute is considered not clean. Things that considered as not clean are html tag and `?`, `#`, `$`, `'` (single quote), `"` (double quote), and `;` character
 1011 | User not found
 1012 | Invalid api-key. Please contact Flip to get a valid api-key
 1013 | Transaction callback url not found
 1014 | User callback url not found
 1014 | Validation token callback not found
-1016 | Phone number miss or false attribute
+1016 | Miss or false phone number verification attribute
 1017 | Wrong phone number
 1018 | Token not registered
 1019 | Phone number has been verified before
-1020 | User should fill all identity form before do identity verification
-1021 | User should upload all identity image before do identity verification
+1020 | User should filled all identity form before do identity verification
+1021 | User should uploaded all identity image before do identity verification
 1022 | User has been verified before
 1023 | Verification failed. Make sure your image fulfill the criteria
 1024 | No image uploaded
-1030 | Parameter empty
+1030 | Miss or false attribute
 1500 | User should finish verification progress before create transaction
 1600 | Action can't be executed
 1999 | Undefined error. Please contact us if this happen.
@@ -61,7 +60,6 @@ Any error related with transaction will have error codes ranging from 2000 to 29
 
 Error Code | Meaning
 -----------|--------
-2000 | The related attribute should not be empty.
 2001 | Pagination parameter should be an integer and more than zero (0)
 2002 | Page parameter should be an integer and more than zero (0)
 2003 | Transaction ID has not assigned. Please contact Flip\'s Developer to fix this
