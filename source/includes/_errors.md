@@ -40,16 +40,16 @@ Error Code | Meaning
 1013 | Transaction callback url not found
 1014 | User callback url not found
 1014 | Validation token callback not found
-1016 | Phone number miss or false attribute
+1016 | Miss or false phone number verification attribute
 1017 | Wrong phone number
 1018 | Token not registered
 1019 | Phone number has been verified before
-1020 | User should fill all identity form before do identity verification
-1021 | User should upload all identity image before do identity verification
+1020 | User should filled all identity form before do identity verification
+1021 | User should uploaded all identity image before do identity verification
 1022 | User has been verified before
 1023 | Verification failed. Make sure your image fulfill the criteria
 1024 | No image uploaded
-1030 | Parameter empty
+1030 | Miss or false attribute
 1500 | User should finish verification progress before create transaction
 1600 | Action can't be executed
 1999 | Undefined error. Please contact us if this happen.
