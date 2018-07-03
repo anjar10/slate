@@ -16,8 +16,8 @@ If error occured, it will return an error with structure as shown in the right p
 {
 	"errors" : [
 		{
-			"code" : 1000,
-			"message" : "Name should not be empty"
+			"code" : 1011,
+			"message" : "User not found"
 		},
 		...
 	]
@@ -34,7 +34,6 @@ Any error related with user will have error codes ranging from 1000 to 1999 with
 
 Error Code | Meaning
 -----------|--------
-1000 | The related attribute should not be empty.
 1001 | Value for the related attribute is considered not clean. Things that considered as not clean are html tag and `?`, `#`, `$`, `'` (single quote), `"` (double quote), and `;` character
 1011 | User not found
 1012 | Invalid api-key. Please contact Flip to get a valid api-key
@@ -61,7 +60,6 @@ Any error related with transaction will have error codes ranging from 2000 to 29
 
 Error Code | Meaning
 -----------|--------
-2000 | The related attribute should not be empty.
 2001 | Pagination parameter should be an integer and more than zero (0)
 2002 | Page parameter should be an integer and more than zero (0)
 2003 | Transaction ID has not assigned. Please contact Flip\'s Developer to fix this
