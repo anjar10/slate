@@ -51,7 +51,7 @@ Parameter | Type | Description
 
 ### Response
 
-> All bank details (without filter by `bank_code`
+> All bank details (without filter by `bank_code`)
 
 ```json
 Status 200
@@ -61,55 +61,76 @@ Content-Type: application/json
     {
         "bank_code": "mandiri",
         "name": "Mandiri",
-        "fee": 3500,
-        "queue": 8,
-        "status": "DISTURBED"
+        "fee": 0,
+        "queue": 11,
+        "status": "OPERATIONAL",
+        "account_number": "1570004913456",
+        "account_name": "Fliptech Lentera Inspirasi Pertiwi "
     },
     {
         "bank_code": "bri",
         "name": "BRI",
-        "fee": 1000,
-        "queue": 39,
-        "status": "OPERATIONAL"
+        "fee": 0,
+        "queue": 10,
+        "status": "OPERATIONAL",
+        "account_number": "067201000299301",
+        "account_name": "PT Fliptech Lentera Inspirasi Pertiwi"
     },
     {
         "bank_code": "bni",
-        "name": "BNI",
-        "fee": 3500,
-        "queue": 57,
-        "status": "OPERATIONAL"
+        "name": "BNI / BNI Syariah",
+        "fee": 0,
+        "queue": 4,
+        "status": "OPERATIONAL",
+        "account_number": "0437051936",
+        "account_name": "PT Fliptech Lentera Inspirasi Pertiwi "
     },
     {
         "bank_code": "bca",
         "name": "BCA",
-        "fee": 3500,
-        "queue": 8,
-        "status": "OPERATIONAL"
+        "fee": 0,
+        "queue": 10,
+        "status": "OPERATIONAL",
+        "account_number": "5465327020",
+        "account_name": "PT Fliptech Lentera IP"
     },
     {
         "bank_code": "bsm",
         "name": "Bank Syariah Mandiri",
-        "fee": 3500,
-        "queue": 2,
-        "status": "HEAVILY_DISTURBED"
+        "fee": 0,
+        "queue": 1,
+        "status": "DISTURBED",
+        "account_number": "7097251465",
+        "account_name": "PT FLIP"
     },
     {
         "bank_code": "cimb",
         "name": "CIMB Niaga",
-        "fee": 3500,
-        "queue": 3,
-        "status": "OPERATIONAL"
+        "fee": 0,
+        "queue": 105,
+        "status": "OPERATIONAL",
+        "account_number": "860004047100",
+        "account_name": "FLIPTECH LENTERA INSPIRASI PERTIWI"
     },
     {
         "bank_code": "muamalat",
         "name": "Muamalat",
-        "fee": 3500,
-        "queue": 1,
-        "status": "OPERATIONAL"
+        "fee": 0,
+        "queue": 9,
+        "status": "OPERATIONAL",
+        "account_number": "3070030364",
+        "account_name": "FLIPTECH LENTERA INSPIRASI PERTIWI, PT"
     },
-    .
-    .
-    .
+    {
+        "bank_code": "tabungan_pensiunan_nasional",
+        "name": "BTPN / Jenius / BTPN Wow!",
+        "fee": 0,
+        "queue": 1,
+        "status": "OPERATIONAL",
+        "account_number": "05373001289",
+        "account_name": "Fliptech Lentera Inspirasi Pertiwi"
+    }
+    ...
 ]
 ```
 
@@ -125,7 +146,9 @@ Content-Type: application/json
         "name": "BCA",
         "fee": 3500,
         "queue": 8,
-        "status": "OPERATIONAL"
+        "status": "OPERATIONAL",
+        "account_number": "5465327020",
+        "account_name": "PT Fliptech Lentera IP"
     }
 ]
 ```
@@ -137,6 +160,8 @@ name | The name of the bank as we usually say it in Indonesian
 fee | The fee that you'll be charged if you send money to this bank
 queue | Current queue for related bank. The longer/higher the queue number, the longer the transaction will be finished.
 status | The status of the disbursement process in related bank. Possible values are: <br><ul><li>`OPERATIONAL`<br>Banks are operational, disbursement will be processed as soon as possible</li><li>`DISTURBED`<br>Banks are slow or have another problem. Disbursement will still be processed, but in slower pace and might be delayed</li><li>`HEAVILY_DISTURBED`<br>Banks are having an error, offline, or another problem that result in a nearly unusable system. Disbursement to this bank can not be processed in a short time, and maybe won't be processed in the same day. You can ask for a refund if this happen.</li></ul>
+account_number | Flip's account number
+account_name | Flip's account name
 
 ## Get Operational Status
 This endpoint will return information whether Flip currently is operational or not. Our operational hour is **09.00-19.00 (WIB/GMT+7) on Monday-Friday**, and **09.00-14.00 (WIB/GMT+7) on Saturday**. Currently we are not operational on Sunday. All transactions made outside those hour will be processed on the next operational hour.
