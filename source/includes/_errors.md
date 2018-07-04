@@ -34,7 +34,6 @@ Any error related with user will have error codes ranging from 1000 to 1999 with
 
 Error Code | Meaning
 -----------|--------
-1001 | Value for the related attribute is considered not clean. Things that considered as not clean are html tag and `?`, `#`, `$`, `'` (single quote), `"` (double quote), and `;` character
 1011 | User not found
 1012 | Invalid api-key. Please contact Flip to get a valid api-key
 1013 | Transaction callback url not found
@@ -49,7 +48,7 @@ Error Code | Meaning
 1022 | User has been verified before
 1023 | Verification failed. Make sure your image fulfill the criteria
 1024 | No image uploaded
-1030 | Miss or false attribute
+1030 | Miss or false attribute/value
 1500 | User should finish verification progress before create transaction
 1600 | Action can't be executed
 1999 | Undefined error. Please contact us if this happen.
