@@ -51,22 +51,25 @@ if($token === 'the_token_you_get_from_big_flip_dashboard'){
 
 ```json
 {
-    "id": 59,
-    "email": "ginanjar.ibnu@gmail.com",
-    "name": "Ginanjar Ibnu Solikhin",
-    "identity_number": "1234567890",
+    "id": 999,
+    "email": "dummy_person@gmail.com",
+    "email_verified": true,
+    "name": "Im Dummy Person",
+    "identity_number": "317500010001",
     "identity_type": "ktp",
-    "date_of_birth": "1998-06-05",
-    "identity_image": "https://storage.biznetgiocloud.com/identity.jpg",
-    "face_image": "https://storage.biznetgiocloud.com/face.jpg",
-    "face_and_identity_image": "https://storage.biznetgiocloud.com/face_and_identity.jpg",
-    "phone_number": "+6285729685018",
-    "deposit": 0,
-    "address": "Jalan Amonia V, Beji Timur, Beji",
+    "birth_date": "2000-01-01",
+    "birth_place": 3492,
+    "address": "Jln. Dummy Place",
     "city": 3405,
-    "place_of_birth": 3492,
-    "verification_status" : "DONE",
-    "verification_failure_notes" : "",
+    "phone_number": "+6285729685018",
+    "phone_number_verified": true,
+    "identity_image": "59_eaa4eba9453d906d8f5ae1816ecaf2fc_1522653089.jpg",
+    "face_image": "59_725ba12bb7e49d650042fe46c2a5b5b5_1522653089.jpg",
+    "face_and_identity_image": "59_c23bca50e0fc1ea05a074928489dcdfb_1521443408.jpeg",
+    "deposit": 9999,
+    "saving": 9999,
+    "created_source": '[App ID]',
+    "kyc_status": 2
 }
 ```
 

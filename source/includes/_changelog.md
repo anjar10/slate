@@ -1,5 +1,11 @@
 # Change Log
 
+**Thursday, July 05 2018**
+
+* Create [Verify Email](#verify-email) endpoint.
+* Remove token param in [Verify Phone Number](#verify-phone-number) endpoint.
+* Change response's structure in transaction's [callback](#callback).
+
 **Tuesday, July 03 2018**
 
 * Add account_name & account_number field to [Get Bank Detail](#get-bank-detail) reponse.
