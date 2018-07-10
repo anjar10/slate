@@ -256,8 +256,10 @@ curl "<%= config[:base_url] %>/user" \
 ```
 
 ### Response
-> The above request returns JSON structured like this:
+> The above request returns ***User Object*** like this:
 
+
+#### User Object
 ```json
 {
     "id": 999,
@@ -278,7 +280,8 @@ curl "<%= config[:base_url] %>/user" \
     "deposit": 9999,
     "saving": 9999,
     "created_source": '[App ID]',
-    "kyc_status": 2
+    "kyc_status": 2,
+    "notes": "",
 }
 ```
 
@@ -296,13 +299,14 @@ Attribute | Description
 `city` | Current user's city of residence<br>Base on city code list
 `phone_number` | User's phone number. Start with country code.
 `phone_number_verified` | Phone number verification status. Possible values are:<br><ul><li>`true`<br>User has done phone number verification</li><li>`false`<br>User hasn't done phone number verification</li></ul>
-`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and hasn't been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
 `identity_image` | Url of the identity card image
 `face_image` | Url of the close up face image
 `face_and_identity_image` | Url of the combination image. Contain user's face hold identity card.
 `deposit` | User's deposit amount
 `saving` | User's saving amount
 `created_source` | The channel of which the user account was created. Contain application ID
+`kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and hasn't been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
+`notes` | Contains any important notes about user, including the reason of kyc's rejection
 
 ## Update User
 This endpoint will insert/update user's attributes.
@@ -623,7 +627,7 @@ curl "<%= config[:base_url] %>/user/verify-identity" \
 ### Response
 ```json
 {
-  "message": "Your phone number has been verified sucessfully"
+  "message": "Your identity has been verified sucessfully"
 }
 ```
 

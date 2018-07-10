@@ -47,7 +47,7 @@ if($token === 'the_token_you_get_from_big_flip_dashboard'){
 }
 ```
 
-> Example of User
+> Example of [User Object](#user-object)
 
 ```json
 {
@@ -69,7 +69,8 @@ if($token === 'the_token_you_get_from_big_flip_dashboard'){
     "deposit": 9999,
     "saving": 9999,
     "created_source": '[App ID]',
-    "kyc_status": 2
+    "kyc_status": 2,
+    "notes": "",
 }
 ```
 

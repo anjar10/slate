@@ -11,6 +11,8 @@
 * Add account_name & account_number field to [Get Bank Detail](#get-bank-detail) reponse.
 * Add unique_code field to [transaction object](#transaction-object).
 * Change [create transaction](#create-transaction) response to return [transaction object](#transaction-object) instead.
+* Add `WRONG_ACCOUNT_NUMBER` at `status` attribute on transaction object data
+* Add `notes`  attribute on transaction object data
 
 **Thursday, June 07 2018**
 
