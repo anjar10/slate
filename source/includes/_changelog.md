@@ -1,5 +1,9 @@
 # Change Log
 
+**Thursday, July 05 2018**
+* Add `WRONG_ACCOUNT_NUMBER` at `status` attribute on transaction object data
+* Add `notes`  attribute on transaction object data
+
 **Thursday, June 07 2018**
 
 * Create [Get All Users Registered](#get-all-user-registered) and [Get All Transactions Created](#get-all-transaction-created) end-point
