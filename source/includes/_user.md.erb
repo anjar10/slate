@@ -717,7 +717,8 @@ Parameter | Type | Description
             "deposit": 9999,
             "saving": 9999,
             "created_source": "[App ID]",
-            "kyc_status": 2
+            "kyc_status": 2,
+            "notes": "",
         },
         {
           "id": 999,
@@ -738,8 +739,9 @@ Parameter | Type | Description
           "deposit": 9999,
           "saving": 9999,
           "created_source": "[App ID]",
-          "kyc_status": 2 
-        }
+          "kyc_status": 2,
+          "notes": "",
+        },
     ]
 }
 ```
@@ -775,3 +777,4 @@ Attribute | Description
 `deposit` | User's deposit amount
 `saving` | User's saving amount
 `created_source` | The channel of which the user account was created. Contain application ID
+`notes` | Contains any important notes about user, including the reason of kyc verification's rejection
