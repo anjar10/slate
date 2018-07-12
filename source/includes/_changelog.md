@@ -1,5 +1,10 @@
 # Change Log
 
+**Thursday, July 12 2018**
+
+* Insert `notes` attribute to transaction object [transaction object](#transaction-object)
+* Insert `notes` attribute to user object [user object](#user-object)
+
 **Thursday, July 05 2018**
 
 * Create [Verify Email](#verify-email) endpoint.
