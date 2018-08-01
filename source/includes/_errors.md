@@ -8,7 +8,7 @@
 ```shell
 ```
 
-If error occured, it will return an error with structure as shown in the right panel:
+If error occured, it will return an error with structure as shown as in the right panel. `redirect_url` field only shown to `duplicate data` related error.
 
 > Example of Error
 
@@ -17,7 +17,8 @@ If error occured, it will return an error with structure as shown in the right p
 	"errors" : [
 		{
 			"code" : 1011,
-			"message" : "User not found"
+			"message" : "User not found",
+			"redirect_url" : "[Redirect URL]"
 		},
 		...
 	]

@@ -281,7 +281,7 @@ curl "<%= config[:base_url] %>/user" \
     "saving": 9999,
     "created_source": '[App ID]',
     "kyc_status": 2,
-    "notes": "",
+    "notes": [],
 }
 ```
 
@@ -306,7 +306,7 @@ Attribute | Description
 `saving` | User's saving amount
 `created_source` | The channel of which the user account was created. Contain application ID
 `kyc_status` | *Know Your Customer* status. Possible values are:<br><ul><li>`0`<br>User hasn't filled identity information and hasn't been verified kyc image by Flip</li><li>`1`<br>User has filled identity information but hasn't been verified kyc verification by Flip</li><li>`2`<br>User has filled identity information and has been verified kyc verification by Flip. **Only user with kyc_status = 2 that can create a transaction in Flip**.</li><li>`3`<br>User kyc was rejected by Flip</li><li>`4`<br>User kyc was banned by Flip<\li></ul>
-`notes` | Contains any important notes about user, including the reason of kyc's rejection
+`notes` | Contains any important notes about user, including the reason of kyc's rejection. Format: Object in `String`.<br>Possible attribute is `verification_failure_reason`
 
 ## Update User
 This endpoint will insert/update user's attributes.
@@ -717,7 +717,8 @@ Parameter | Type | Description
             "deposit": 9999,
             "saving": 9999,
             "created_source": "[App ID]",
-            "kyc_status": 2
+            "kyc_status": 2,
+            "notes": [],
         },
         {
           "id": 999,
@@ -738,8 +739,11 @@ Parameter | Type | Description
           "deposit": 9999,
           "saving": 9999,
           "created_source": "[App ID]",
-          "kyc_status": 2 
-        }
+          "kyc_status": 1,
+          "notes": {
+            "verification_failure_reason": " No face image is identically found on self-photo"
+          },
+        },
     ]
 }
 ```
@@ -775,3 +779,4 @@ Attribute | Description
 `deposit` | User's deposit amount
 `saving` | User's saving amount
 `created_source` | The channel of which the user account was created. Contain application ID
+`notes` | Contains any important notes about user, including the reason of kyc's rejection. Format: Object in `String`.<br>Possible attribute is `verification_failure_reason`

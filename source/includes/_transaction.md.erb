@@ -93,8 +93,8 @@ Parameter | Type | Description
     "debit_receipt": "",
     "created_at": "2018-07-03 14:39:12",
     "completed_at": null,
-    "fee": null,
-    "notes": ""
+    "fee": null
+    "notes": []
 }
 ```
 
@@ -177,7 +177,7 @@ Parameter | Type | Description
             "completed_at": "0000-00-00 00:00:00",
             "recipient_city": 391,
             "fee": 0,
-            "notes": ""
+            "notes": []
         },
         {
             "id": 789,
@@ -196,7 +196,49 @@ Parameter | Type | Description
             "completed_at": "2017-08-25 09:11:35",
             "recipient_city": 391,
             "fee": 0,
-            "notes": ""
+            "notes": []
+        },
+        {
+            "id": 787,
+            "user_id": 23,
+            "amount": 10000,
+            "unique_code" : [UNIQUE_CODE],
+            "status": "REJECTED",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "test remark",
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "0000-00-00 00:00:00",
+            "recipient_city": 391,
+            "fee": 0,
+            "notes": {
+                 "rejected_reason": "It seems your transaction has not included transfer fee yet. Please kindly resend the money with the right amount, transfer fee, and unique code to Flip’s bank account."
+             }
+        },
+        {
+            "id": 786,
+            "user_id": 23,
+            "amount": 10000,
+            "unique_code" : [UNIQUE_CODE],
+            "status": "WRONG_ACCOUNT_NUMBER",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "test remark",
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "0000-00-00 00:00:00",
+            "recipient_city": 391,
+            "fee": 0,
+            "notes": {
+                 "wrong_account_number_reason": "The beneficiary account found inactive. Please kindly check and confirm to your recipient."
+             }
         }
     ]
 }
@@ -231,7 +273,7 @@ Attribute | Description
 `completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
 `recipient_city` | City code of the recipient city
 `fee` | The fee of the transaction
-`notes` | Provide `WRONG_ACCOUNT_NUMBER` or `REJECTED` reasons
+`notes` | Provide reasons why the transaction cannot be processed according to transaction's status. Format: Object in `String`.<br>Possible attributes are `rejected_reason` and `wrong_account_nmber_reason`
 
 ## Get Transaction Detail
 This endpoint will provide information of single transaction based on transaction id
@@ -302,7 +344,7 @@ Parameter | Type | Description
       "completed_at": "0000-00-00 00:00:00",
       "recipient_city": 391,
       "fee": 0,
-      "notes": "",
+      "notes": [],
   }
 }
 ```
@@ -825,7 +867,7 @@ Parameter | Type | Description
             "completed_at": "0000-00-00 00:00:00",
             "recipient_city": 391,
             "fee": 0,
-            "notes": ""
+            "notes": []
         },
         {
             "id": 789,
@@ -844,7 +886,49 @@ Parameter | Type | Description
             "completed_at": "2017-08-25 09:11:35",
             "recipient_city": 391,
             "fee": 0,
-            "notes": ""
+            "notes": []
+        },
+        {
+            "id": 787,
+            "user_id": 23,
+            "amount": 10000,
+            "unique_code" : [UNIQUE_CODE],
+            "status": "REJECTED",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "test remark",
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "0000-00-00 00:00:00",
+            "recipient_city": 391,
+            "fee": 0,
+            "notes": {
+                 "rejected_reason": "It seems your transaction has not included transfer fee yet. Please kindly resend the money with the right amount, transfer fee, and unique code to Flip’s bank account."
+             }
+        },
+        {
+            "id": 786,
+            "user_id": 23,
+            "amount": 10000,
+            "unique_code" : [UNIQUE_CODE],
+            "status": "WRONG_ACCOUNT_NUMBER",
+            "sender_bank": "bni",
+            "account_number": "0437051936",
+            "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
+            "beneficiary_bank": "bri",
+            "remark": "test remark",
+            "debit_receipt": "https://storage.biznetgiocloud.com/v1/AUTH_GIOOST443831/bukti_transfer/123993_2017-08-04%202017:07:26.jpg",
+            "credit_receipt": "",
+            "created_at": "2017-08-24 21:21:23",
+            "completed_at": "0000-00-00 00:00:00",
+            "recipient_city": 391,
+            "fee": 0,
+            "notes": {
+                 "wrong_account_number_reason": "The beneficiary account found inactive. Please kindly check and confirm to your recipient."
+             }
         }
     ]
 }
@@ -878,4 +962,4 @@ Attribute | Description
 `completed_at` | The time when the transaction is finished. Will only show valid value when the status is `DONE`.<br>Format: `YYYY-MM-DD HH:mm:ss`
 `recipient_city` | City code of the recipient city
 `fee` | The fee of the transaction
-`notes` | Provide `WRONG_ACCOUNT_NUMBER` or `REJECTED` reasons
+`notes` | Provide reasons why the transaction cannot be processed according to transaction's status. Format: Object in `String`.<br>Possible attributes are `rejected_reason` and `wrong_account_nmber_reason`
