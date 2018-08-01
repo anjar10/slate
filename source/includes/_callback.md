@@ -30,20 +30,23 @@ if($token === 'the_token_you_get_from_big_flip_dashboard'){
 
 ```json
 {
-    "id": 790,
-    "user_id": 23,
+    "id": [TRANSACTION_ID],
+    "user_id": [USER_ID],
     "amount": 10000,
-    "status": "DONE",
-    "timestamp": "2017-08-28 14:32:47",
-    "beneficiary_bank": "bni",
-    "beneficiary_account": "0437051936",
-    "beneficiary_name": "- FLIPTECH LENTERA INSPIRASI P",
-    "sender_bank": "bri",
-    "remark": "testing",
-    "receipt": "https://storage.biznetgiocloud.com/receipt.jpg",
-    "time_served": "2017-08-28 14:42:47",
-    "recipient_city": 391,
-    "fee": 1500
+    "unique_code" : [UNIQUE_CODE],
+    "status": "PENDING",
+    "sender_bank": "bni",
+    "account_number": "12345678",
+    "beneficiary_bank": "muamalat",
+    "beneficiary_name": "Dummy Account",
+    "beneficiary_city": 391,
+    "remark": "Dummy via Flip",
+    "credit_receipt": "",
+    "debit_receipt": "",
+    "created_at": "2018-07-03 14:39:12",
+    "completed_at": null,
+    "fee": null,
+    "notes": ""
 }
 ```
 
